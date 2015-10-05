@@ -11,3 +11,6 @@ en:
       calendar: Calendar
       language: Language
       feedback: Feedback
+      profile: Profile
+      edit_profile: Edit profile
+      edit_password: Change password

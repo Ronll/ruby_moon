@@ -1,0 +1,12 @@
+ru:
+  form_object:
+    attributes:
+      sign_in_form:
+        email: E-mail
+        password: Пароль
+    errors:
+      models:
+        sign_in_form:
+          attributes:
+            base:
+              invalid_credentials: Неверный e-mail или пароль

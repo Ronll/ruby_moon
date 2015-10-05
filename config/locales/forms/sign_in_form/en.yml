@@ -1,0 +1,12 @@
+en:
+  form_object:
+    attributes:
+      sign_in_form:
+        email: E-mail
+        password: Password
+    errors:
+      models:
+        sign_in_form:
+          attributes:
+            base:
+              invalid_credentials: Invalid e-mail or password

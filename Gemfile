@@ -20,13 +20,14 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Gem to deal with mongodb
-gem 'mongoid', '~> 4.0.0'
+gem 'mongoid', '~> 5.0.0'
 
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 
-# Add locales gem
+# Add locales gems
 gem 'rails-i18n', '~> 4.0.0'
+gem 'i18n-timezones', '~> 1.3.5'
 
 # Use Puma as the app server
 gem 'puma', group: :production
@@ -54,6 +55,7 @@ group :test do
   gem 'capybara', '~> 2.5.0'
   gem 'poltergeist', '~> 1.6.0'
   gem 'factory_girl_rails', '~> 4.5.0'
+  gem 'codeclimate-test-reporter', group: :test, require: nil
 end
 
 # For markup

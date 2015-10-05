@@ -1,0 +1,9 @@
+en:
+  profiles:
+    new:
+      sign_up: Sign up
+      errors: Please, fill the form correctly
+    edit:
+      profile: Your profile
+      errors: Please, fill the form correctly
+      update: Update

@@ -4,10 +4,20 @@ describe CalendarController do
 
   describe 'GET #index' do
 
+    include_examples 'controller sign in required' do
+      before { get :index }
+    end
+
     describe 'when we are signed in' do
 
       before do
         @user = controller_sign_in
+      end
+
+      before do
+        current_time = Time.new(2015, 1, 11)
+        allow(Time).to receive(:now).and_return(current_time)
+        expect(@user).to receive(:in_time_zone).and_return(Time.new(2015, 1, 10))
       end
 
       it 'should render "index" view' do
@@ -18,18 +28,16 @@ describe CalendarController do
       it 'should pass to view result of user calendar data provider' do
         user_calendar = double('user_calendar')
         expect(UserCalendarFacade).to receive(:new).with(@user).and_return(user_calendar)
-        expect(Date).to receive(:today).and_return(Date.new(2015, 1, 10))
         expect(user_calendar).to receive(:month_info)
-                                     .with(Date.new(2015, 1), Date.new(2015, 1, 10)).and_return('month_info')
+                                     .with(Date.new(2015, 2), Date.new(2015, 1, 10)).and_return('month_info')
 
-        get :index, { year: 2015, month: 1 }
+        get :index, { year: 2015, month: 2 }
         expect(assigns(:month_info)).to eq 'month_info'
       end
 
       it 'should get month info with today date if date is not received' do
         user_calendar = double('user_calendar')
         expect(UserCalendarFacade).to receive(:new).with(@user).and_return(user_calendar)
-        expect(Date).to receive(:today).and_return(Date.new(2015, 1, 10))
         expect(user_calendar).to receive(:month_info)
                                      .with(Date.new(2015, 1, 10), Date.new(2015, 1, 10)).and_return('month_info')
 
@@ -37,25 +45,13 @@ describe CalendarController do
         expect(assigns(:month_info)).to eq 'month_info'
       end
     end
-
-
-    describe 'when we are not signed in' do
-      it 'should redirect to sign in action with error flash' do
-        get :index
-        expect(response).to redirect_to(sign_in_url)
-        expect(flash[:error]).not_to be_nil
-      end
-    end
   end
 
 
-  describe 'GET #show' do
-    describe 'when we are not signed in' do
-      it 'should redirect to sign in action with error flash' do
-        get :show, { year: 2015, month: 1, day: 1 }
-        expect(response).to redirect_to(sign_in_url)
-        expect(flash[:error]).not_to be_nil
-      end
+  describe 'GET #edit' do
+
+    include_examples 'controller sign in required' do
+      before { get :edit, { year: 2015, month: 1, day: 1 } }
     end
 
 
@@ -63,15 +59,15 @@ describe CalendarController do
       let(:user) { FactoryGirl.create(:user) }
       before { controller_sign_in(user) }
 
-      it 'should render "show template"' do
-        get :show, { year: 2015, month: 1, day: 1 }
-        expect(response).to render_template(:show)
+      it 'should render "edit template"' do
+        get :edit, { year: 2015, month: 1, day: 1 }
+        expect(response).to render_template(:edit)
       end
 
       it 'should pass calendar day form to view' do
         form = double('calendar_form')
         expect(CalendarDayForm).to receive(:new).with(user, Date.new(2015, 1, 1)).and_return(form)
-        get :show, { year: 2015, month: 1, day: 1 }
+        get :edit, { year: 2015, month: 1, day: 1 }
         expect(assigns[:day_form]).to eq(form)
       end
 
@@ -80,7 +76,7 @@ describe CalendarController do
         expect(UserCalendarFacade).to receive(:new).with(user).and_return(data_provider)
         expect(data_provider).to receive(:day_info).with(Date.new(2015, 1, 1)).and_return('day info')
 
-        get :show, { year: 2015, month: 1, day: 1 }
+        get :edit, { year: 2015, month: 1, day: 1 }
         expect(assigns[:day_info]).to eq('day info')
       end
     end
@@ -88,6 +84,10 @@ describe CalendarController do
 
 
   describe 'PUT #update' do
+    include_examples 'controller sign in required' do
+      before { put :update, { year: 2015, month: 1, day: 1, calendar_day_form: { params: 'foo' } } }
+    end
+
     describe 'when we are signed in' do
       let(:user) { FactoryGirl.create(:user) }
       let(:predictor) { double(PeriodPredictor) }
@@ -135,9 +135,9 @@ describe CalendarController do
           put :update, { year: 2015, month: 1, day: 1, calendar_day_form: { params: 'foo' } }
         end
 
-        it 'should render "show template"' do
+        it 'should render "edit template"' do
           put :update, { year: 2015, month: 1, day: 1, calendar_day_form: { params: 'foo' } }
-          expect(response).to render_template(:show)
+          expect(response).to render_template(:edit)
         end
 
         it 'should pass to template form' do

@@ -41,14 +41,16 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
 
   #This Config is added for Feedback, it will use this email to send the feedback.
-  config.action_mailer.perform_deliveries = true
-  config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
       address:              'smtp.gmail.com',
       port:                 587,
-      user_name:            'lapushnerron@gmail.com',
-      password:             'lenuorrduthnfotq',
+      user_name:            'example@gmail.com',
+      password:             '123456',
       authentication:       'plain',
       enable_starttls_auto: true  }
+
+  # Use the lowest log level to ensure availability of diagnostic information
+  # when problems arise.
+  config.log_level = :fatal
+
 end

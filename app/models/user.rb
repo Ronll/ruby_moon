@@ -5,6 +5,7 @@ class User
 
   field :email, type: String
   field :encrypted_password, type: String
+  field :time_zone, type: String
 
   has_many :critical_periods
   has_many :future_critical_periods
@@ -17,6 +18,7 @@ class User
             uniqueness: true,
             format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i }
   validates :password, presence: true, confirmation: true
+  validates :time_zone, inclusion: { in: ActiveSupport::TimeZone.zones_map.keys }
 
 
   # Get first upcoming future critical period.
@@ -26,5 +28,15 @@ class User
   # @return [FutureCriticalPeriod]
   def upcoming_critical_period(date)
     future_critical_periods.upcoming(date).first
+  end
+
+
+  # Return time object in user's timezone.
+  #
+  # @param time [Time]
+  #
+  # @param [ActiveSupport::TimeWithZone]
+  def in_time_zone(time)
+    time.in_time_zone(time_zone)
   end
 end
