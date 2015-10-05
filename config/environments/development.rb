@@ -35,4 +35,22 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+
+  # allow all Ips for console in dev mode
+  config.web_console.whitelisted_ips = '0.0.0.0/0'
+
+
+  #added config:
+
+  #This Config is added for Feedback, it will use this email to send the feedback.
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+      address:              'smtp.gmail.com',
+      port:                 587,
+      user_name:            '',
+      password:             '',
+      authentication:       'plain',
+      enable_starttls_auto: true  }
 end

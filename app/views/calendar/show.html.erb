@@ -22,7 +22,7 @@
         <%= t '.critical_day' %>
       </label>
     </div>
-
+ 
     <% unless @day_info[:current_period].nil? %>
         <div class="form-group delete-period-block panel panel-default" id="delete-period-block">
           <div class="panel-heading"><%= t '.delete_title' %></div>
@@ -61,3 +61,4 @@
       <%= f.submit(t('.save'), class: 'btn btn-primary') %>
     </div>
 <% end %>
+

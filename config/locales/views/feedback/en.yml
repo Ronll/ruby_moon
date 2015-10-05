@@ -1,0 +1,12 @@
+en:
+  feedback:
+    new:
+      name: Name
+      email: Email
+      subject: Subject
+      message: Message
+      send: Send
+      feedback: Feedback
+  helpers:
+    submit:
+      create: Send

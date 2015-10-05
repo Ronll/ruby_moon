@@ -1,0 +1,22 @@
+class FeedbackForm
+  include ActiveModel::Model
+
+  attr_accessor :name, :email, :subject, :message
+
+  validates :name, presence: true
+  validates :email, presence: true,  format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, message:"add message"}
+  validates :message, presence: true, length: { minimum : 10 }
+  validates :subject, presence: true
+  
+  def submit
+    if valid?
+      Feedback.send_mail(@name, @email, @subject, @message).deliver_now
+      true
+    else
+      false
+    end
+  end
+
+    
+end 
+

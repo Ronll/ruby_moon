@@ -1,0 +1,11 @@
+ru:
+  feedback:
+    new:
+      name: имя
+      email: Email
+      subject: Предмет
+      message: сообщение
+      feedback: обратная связь
+  helpers:
+    submit:
+      create: послать

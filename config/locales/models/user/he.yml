@@ -1,0 +1,7 @@
+he:
+  mongoid:
+    attributes:
+      user:
+        email: אימייל
+        password: סיסמא
+        password_confirmation: אימות סיסמא

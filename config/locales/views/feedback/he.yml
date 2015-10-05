@@ -1,0 +1,11 @@
+he:
+  feedback:
+    new:
+      name: שם
+      email: אימייל
+      subject: נושא
+      message: הודעה
+      feedback: משוב
+  helpers:
+    submit:
+      create: שלח
